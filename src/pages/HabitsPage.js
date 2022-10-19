@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import ListHabit from "./HabitsPageComponents/ListHabit";
+/* import ListHabit from "./HabitsPageComponents/ListHabit"; */
 import Loading from "../components/Loading";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { useContext, useState, useEffect } from "react";
@@ -9,16 +9,16 @@ import Day from "./HabitsPageComponents/Day";
 import Habit from "./HabitsPageComponents/Habit";
 import axios from "axios";
 import MyContext from "../Mycontext";
+
 export default function HabitsPage() {
   const { userInfo } = useContext(MyContext);
   const daysVector = ["S", "T", "Q", "Q", "S", "S", "D"];
   const [showFormHabit, setShowFormHabit] = useState(false);
   const [habitInput, setHabitInput] = useState("");
   const [daysSelected, setDaysSelected] = useState([]);
-  const [thereAreHabits, setThereAreHabits] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [habitsAdded, setHabitsAdded] = useState(null);
-  const [controlUseEffect, SetControlUseeffect] =useState(true);
+  const [habitsAdded, setHabitsAdded] = useState([]);
+  const [updateListHabit, setUpdateListHabit] =useState(true);
 
   useEffect(() => {
     const URL =
@@ -32,9 +32,13 @@ export default function HabitsPage() {
     const promise = axios.get(URL, config);
     promise.then((resp) => {
       setHabitsAdded(resp.data);
-      console.log(resp.data)
+      console.log(resp.data) // quando o usuário não tem  hábitos cadastrados, o servidor retorna uma array vazia;
     });
-  }, [controlUseEffect]); // controlar o useEffect para renderizar o get sempre que eu adicionar mais um hábito;
+
+    promise.catch((err)=>{
+      console.log(err.response)
+    })
+  }, [updateListHabit]); // controlar o useEffect para renderizar o get sempre que eu adicionar mais um hábito;
 
   function changeFormHabitStatus() {
     if (showFormHabit === false) {
@@ -71,8 +75,7 @@ export default function HabitsPage() {
       setHabitInput("");
       setDaysSelected([]);
       setShowFormHabit(false);
-      setThereAreHabits(true);
-      SetControlUseeffect(!controlUseEffect)
+      setUpdateListHabit(!updateListHabit);
     });
     promise.catch((err) => {
       setIsLoading(false);
@@ -128,11 +131,14 @@ export default function HabitsPage() {
           </AddTaskForm>
         )}
 
-       {thereAreHabits===true &&(
-        <ListHabit habitsAdded={habitsAdded}/>
+       {habitsAdded.length!==0 &&(
+          <>
+          {habitsAdded.map((e,i) => <Habit key={i} name={e.name} id={e.id} days={e.days} updateListHabit={updateListHabit} setUpdateListHabit ={setUpdateListHabit}/>)}
+       </>
+       
        )}
 
-        {thereAreHabits === false && (
+        {(habitsAdded.length === 0) && (
           <Message>
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
             começar a trackear!

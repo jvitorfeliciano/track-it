@@ -4,7 +4,6 @@ import MyContext from "../Mycontext";
 
 export default function Header() {
     const {userInfo} = useContext(MyContext)
-    console.log(userInfo)
   return (
     <HeaderContainer>
       <span>Trackit</span>
