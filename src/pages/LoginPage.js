@@ -7,43 +7,59 @@ import LoginDesign from "../components/LogoDesign";
 import MyContext from "../Mycontext";
 
 export default function LoginPage() {
-const {userInfo, setUserInfo} = useContext(MyContext) // pego os value armazenados no meu Mycontext
-const  navigate =useNavigate();
-const [loginForm, setLoginForm] = useState({email:"", password:""});
-const [loadingLogin, setLoadingLogin] = useState(false);
+  const { setUserInfo } = useContext(MyContext);
+  const navigate = useNavigate();
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+  const [loadingLogin, setLoadingLogin] = useState(false);
 
-function getLoginFormInfo(e){
-  console.log(e.target)
-  setLoginForm({...loginForm, [e.target.name]:e.target.value});
-}
+  function getLoginFormInfo(e) {
+    console.log(e.target);
+    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+  }
 
-function handleLoginForm(e){
+  function handleLoginForm(e) {
+    e.preventDefault();
+    setLoadingLogin(true);
 
-  e.preventDefault();
-  setLoadingLogin(true);
-  
-  const URL= "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
-  const promise = axios.post(URL, loginForm);
+    const URL =
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
+    const promise = axios.post(URL, loginForm);
 
-  promise.then((resp)=>{
-    setLoadingLogin(false);
-    setUserInfo(resp.data);
-    navigate("/habitos");
-    console.log(resp.data);
-  })
+    promise.then((resp) => {
+      setLoadingLogin(false);
+      setUserInfo(resp.data);
+      navigate("/habitos");
+      console.log(resp.data);
+    });
 
-  promise.catch((err)=>{
-    setLoadingLogin(false);
-    alert(err.response.data.message);
-  })
-}
+    promise.catch((err) => {
+      setLoadingLogin(false);
+      alert(err.response.data.message);
+    });
+  }
   return (
     <LoginPageContainer>
-    <LoginDesign/>
+      <LoginDesign />
       <LoginForm onSubmit={handleLoginForm}>
-        <input disabled={loadingLogin} onChange={getLoginFormInfo} name="email" type="email" required placeholder="email" />
-        <input disabled={loadingLogin} onChange={getLoginFormInfo} name="password" type="password" required placeholder="senha" />
-        <button disabled={loadingLogin} type="submit">{loadingLogin?<Loading/>:"Entrar"}</button>
+        <input
+          disabled={loadingLogin}
+          onChange={getLoginFormInfo}
+          name="email"
+          type="email"
+          required
+          placeholder="email"
+        />
+        <input
+          disabled={loadingLogin}
+          onChange={getLoginFormInfo}
+          name="password"
+          type="password"
+          required
+          placeholder="senha"
+        />
+        <button disabled={loadingLogin} type="submit">
+          {loadingLogin ? <Loading /> : "Entrar"}
+        </button>
       </LoginForm>
       <Link to="/cadastro">
         <span>Não tem uma conta? Cadastre-se!</span>
@@ -53,22 +69,23 @@ function handleLoginForm(e){
 }
 
 const LoginPageContainer = styled.main`
+  width: 100vw;
+  height: 100vh;
+  background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-top: 65px;
-  a{
-  margin-top: 4px;
-  font-family: "Lexend Deca";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13.976px;
-  line-height: 17px;
-  text-align: center;
-  text-decoration-line: underline;
-  color: #52b6ff;
-  margin-top: 25px;
+  a {
+    margin-top: 4px;
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13.976px;
+    line-height: 17px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #52b6ff;
+    margin-top: 25px;
   }
 `;
 

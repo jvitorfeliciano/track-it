@@ -72,7 +72,11 @@ export default function SignUpPage() {
           placeholder="foto"
           required
         />
-        <button disabled={loadingSignUp} onChange={getSignUpInfos} type="submit">
+        <button
+          disabled={loadingSignUp}
+          onChange={getSignUpInfos}
+          type="submit"
+        >
           {loadingSignUp ? <Loading /> : "Cadastrar"}
         </button>
       </SignUpForm>
@@ -84,11 +88,12 @@ export default function SignUpPage() {
 }
 
 const SignUpPageContainer = styled.main`
+  width: 100vw;
+  height: 100vh;
+  background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-top: 65px;
   a {
     margin-top: 4px;
     font-family: "Lexend Deca";

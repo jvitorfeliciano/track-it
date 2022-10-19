@@ -16,6 +16,7 @@ export default function LoginDesign() {
 const Logo = styled.section`
   width: 180px;
   height: 116px;
+  margin-top:65px;
   img {
     width: 100%;
     height: auto;

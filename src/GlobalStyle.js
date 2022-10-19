@@ -52,6 +52,8 @@ table {
 *{
     box-sizing: border-box;
 }
- 
+body{
+ background: #e5e5e5;
+ }
 `;
 export default GlobalStyle;
