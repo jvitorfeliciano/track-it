@@ -28,7 +28,7 @@ export default function LoginPage() {
     promise.then((resp) => {
       setLoadingLogin(false);
       setUserInfo(resp.data);
-      navigate("/habitos");
+      navigate("/hoje");
       console.log(resp.data);
     });
 

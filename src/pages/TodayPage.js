@@ -8,9 +8,11 @@ import DailyHabit from "./TodayPageComponents.js/DailyHabit";
 import dayjs from "dayjs";
 
 export default function TodayPage() {
-  const { userInfo } = useContext(MyContext);
+  const { userInfo, habitsDone, porcentage, setPorcentage } =
+    useContext(MyContext);
   const [habitsVector, setHabitsVector] = useState([]);
-  console.log(dayjs(), dayjs().format("dddd"), dayjs().format("DD/MM"));
+  const [updateStatus, setUpdateStatus] = useState(false);
+
   useEffect(() => {
     const URL =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
@@ -29,7 +31,7 @@ export default function TodayPage() {
     promise.catch((err) => {
       console.log(err.response.data);
     });
-  }, []);
+  }, [updateStatus]);
 
   function translateName() {
     switch (dayjs().format("dddd")) {
@@ -51,15 +53,28 @@ export default function TodayPage() {
         break;
     }
   }
+  function computePorcentage(array_1, array_2) {
+    if (array_2.length === 0) {
+      setPorcentage(0);
+      return 0;
+    }
+    let average = ((array_1.length / array_2.length) * 100).toFixed(2);
+    setPorcentage(average);
+    return average + "%" + " hábitos concluidos hoje";
+  }
   return (
     <div>
       <Header />
       <TodayPageContainer>
-        <Date>
+        <Date changeColor={habitsDone.length !== 0}>
           <h2>
             {translateName()}, {dayjs().format("DD/MM")}
           </h2>
-          <p>67% dos hábito concluídos</p>
+          <p>
+            {habitsDone.length === 0
+              ? "Nenhum hábito concluido ainda"
+              : computePorcentage(habitsDone, habitsVector)}
+          </p>
         </Date>
         {habitsVector.map((e, i) => (
           <DailyHabit
@@ -69,6 +84,8 @@ export default function TodayPage() {
             currentSequence={e.currentSequence}
             highestSequence={e.highestSequence}
             id={e.id}
+            updateStatus={updateStatus}
+            setUpdateStatus={setUpdateStatus}
           />
         ))}
       </TodayPageContainer>
@@ -103,7 +120,7 @@ const Date = styled.section`
     font-weight: 400;
     font-size: 17.976px;
     line-height: 22px;
-    color: #bababa;
+    color: ${(props) => (props.changeColor === true ? "#8FC549" : "#bababa")};
     margin-bottom: 28px;
   }
 `;

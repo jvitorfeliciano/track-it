@@ -1,13 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function Day({
+export default function DayOption({
   day,
   index,
   daysSelected,
   setDaysSelected,
   isSelected,
-  isLoading
+  isLoading,
 }) {
   console.log(daysSelected);
 
@@ -25,7 +25,7 @@ export default function Day({
       teste={isLoading}
       disabled={isLoading}
       isSelected={isSelected}
-      onClick={() => handleDayButton(index + 1)}
+      onClick={() => handleDayButton(index)}
     >
       {day}
     </DayButton>

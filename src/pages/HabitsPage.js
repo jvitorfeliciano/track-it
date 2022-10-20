@@ -5,14 +5,14 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { useContext, useState, useEffect } from "react";
-import Day from "./HabitsPageComponents/Day";
+import DayOption from "./HabitsPageComponents/DayOption";
 import Habit from "./HabitsPageComponents/Habit";
 import axios from "axios";
 import MyContext from "../Mycontext";
 
 export default function HabitsPage() {
   const { userInfo } = useContext(MyContext);
-  const daysVector = ["S", "T", "Q", "Q", "S", "S", "D"];
+  const daysVector = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [showFormHabit, setShowFormHabit] = useState(false);
   const [habitInput, setHabitInput] = useState("");
   const [daysSelected, setDaysSelected] = useState([]);
@@ -26,8 +26,8 @@ export default function HabitsPage() {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+        Authorization: `Bearer ${userInfo.token}`
+      }
     };
     const promise = axios.get(URL, config);
     promise.then((resp) => {
@@ -101,13 +101,13 @@ export default function HabitsPage() {
             />
             <WeekButtons>
               {daysVector.map((e, i) => (
-                <Day
+                <DayOption 
                   key={i}
                   day={e}
                   index={i}
                   daysSelected={daysSelected}
                   isLoading={isLoading}
-                  isSelected={daysSelected.includes(i + 1)}
+                  isSelected={daysSelected.includes(i)}
                   setDaysSelected={setDaysSelected}
                 />
               ))}

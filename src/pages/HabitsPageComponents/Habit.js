@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import DayHabit from "./DayHabit";
 import { BsTrash } from "react-icons/bs";
 import { useContext } from "react";
 import MyContext from "../../Mycontext";
 import axios from "axios";
+
 export default function Habit({
   name,
   days,
@@ -11,7 +11,7 @@ export default function Habit({
   setUpdateListHabit,
   id,
 }) {
-  const daysHabitVector = ["S", "T", "Q", "Q", "S", "S", "D"];
+  const daysHabitVector = ["D", "S", "T", "Q", "Q", "S", "S"];
   const { userInfo } = useContext(MyContext);
 
   function deleteHabit(adress) {
@@ -40,7 +40,9 @@ export default function Habit({
     <HabitContainer>
       <h2>{name}</h2>
       {daysHabitVector.map((element, i) => (
-        <DayHabit index={i + 1} key={i} day={element} days={days} />
+        <DayHabitButton type="button" isSelected={days.includes(i)}>
+          {element}
+        </DayHabitButton> // posso mapear e retornar um styled components
       ))}
       <BsTrash onClick={() => deleteHabit(id)} />
     </HabitContainer>
@@ -70,4 +72,20 @@ const HabitContainer = styled.div`
     top: 11px;
     right: 11px;
   }
+`;
+const DayHabitButton = styled.button`
+  color: ${(props) => (props.isSelected === true ? "#FFFFFF" : "#dbdbdb")};
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.976px;
+  line-height: 25px;
+  width: 30px;
+  height: 30px;
+  background: ${(props) => (props.isSelected === true ? "#CFCFCF" : "#ffffff")};
+  border: ${(props) =>
+    props.isSelected === true ? "none" : "1px solid #d5d5d5"};
+  border-radius: 5px;
+  margin-right: 4px;
+  margin-top: 8px;
 `;
