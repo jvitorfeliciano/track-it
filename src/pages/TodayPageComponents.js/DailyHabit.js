@@ -13,15 +13,10 @@ export default function DailyHabit({
   setUpdateStatus,
   updateStatus,
 }) {
-  const { userInfo, habitsDone, setHabitsDone } = useContext(MyContext);
-  console.log(userInfo, habitsDone);
-  console.log(id, name, done, currentSequence, highestSequence);
+  const { userInfo } = useContext(MyContext);
 
   function handleHabitStatus(doneStatus, adress) {
     if (doneStatus === true) {
-      const aux = habitsDone.filter((e) => e !== adress);
-      setHabitsDone(aux);
-
       const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${adress}/uncheck`;
 
       const config = {
@@ -39,7 +34,6 @@ export default function DailyHabit({
         alert(err.response.data.message);
       });
     } else if (doneStatus === false) {
-      setHabitsDone([...habitsDone, adress]);
       const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${adress}/check`;
 
       const config = {
@@ -58,21 +52,26 @@ export default function DailyHabit({
       });
     }
   }
-
+  console.log(currentSequence >= highestSequence)
   return (
+    <>
+     
     <HabitDailyCard
       done={done}
-      changeColor={currentSequence >= highestSequence}
+      changeColor={currentSequence >= highestSequence && currentSequence!==0}
     >
       <div>
         <h2>{name}</h2>
         <p>
-          Sequência atual: <span>{currentSequence} dias</span>{" "}
+          Sequência atual: <span>{currentSequence} dias</span><br></br>
+          Seu recorde: <span>{highestSequence} dias</span>
         </p>
-        <p>Seu recorde: {highestSequence} dias</p>
+        
       </div>
       <AiFillCheckSquare onClick={() => handleHabitStatus(done, id)} />
     </HabitDailyCard>
+    </>
+  
   );
 }
 
@@ -109,13 +108,19 @@ const HabitDailyCard = styled.section`
     font-size: 12.976px;
     line-height: 16px;
     color: #666666;
-  }
-  span {
-    font-family: "Lexend Deca";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12.976px;
-    line-height: 16px;
-    color: ${(props) => (props.changeColor === true ? "#8FC549" : "#bababa")};
+    span {
+      font-family: "Lexend Deca";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12.976px;
+      line-height: 16px;
+    }
+    span:first-child {
+      color: ${(props) => (props.done === true ? "#8FC549" : " #666666")};
+    }
+
+    span:last-child {
+      color: ${(props) => (props.changeColor === true ? "#8FC549" : " #666666")};
+    }
   }
 `;

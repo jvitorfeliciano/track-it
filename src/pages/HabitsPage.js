@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-/* import ListHabit from "./HabitsPageComponents/ListHabit"; */
 import Loading from "../components/Loading";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { useContext, useState, useEffect } from "react";
@@ -17,8 +16,8 @@ export default function HabitsPage() {
   const [habitInput, setHabitInput] = useState("");
   const [daysSelected, setDaysSelected] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [habitsAdded, setHabitsAdded] = useState([]);
-  const [updateListHabit, setUpdateListHabit] =useState(true);
+  const [habitsAdded, setHabitsAdded] = useState(null);
+  const [updateListHabit, setUpdateListHabit] = useState(true);
 
   useEffect(() => {
     const URL =
@@ -26,18 +25,18 @@ export default function HabitsPage() {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`
-      }
+        Authorization: `Bearer ${userInfo.token}`,
+      },
     };
     const promise = axios.get(URL, config);
     promise.then((resp) => {
       setHabitsAdded(resp.data);
-      console.log(resp.data) // quando o usuário não tem  hábitos cadastrados, o servidor retorna uma array vazia;
+      console.log(resp.data); // quando o usuário não tem  hábitos cadastrados, o servidor retorna uma array vazia;
     });
 
-    promise.catch((err)=>{
-      console.log(err.response)
-    })
+    promise.catch((err) => {
+      console.log(err.response);
+    });
   }, [updateListHabit]); // controlar o useEffect para renderizar o get sempre que eu adicionar mais um hábito;
 
   function changeFormHabitStatus() {
@@ -82,6 +81,19 @@ export default function HabitsPage() {
       alert(err.response.data.message);
     });
   }
+
+  if (habitsAdded === null) {
+    return (
+      <>
+        <Header />
+        <HabitsPageContainer>
+          <Loading />
+        </HabitsPageContainer>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -101,7 +113,7 @@ export default function HabitsPage() {
             />
             <WeekButtons>
               {daysVector.map((e, i) => (
-                <DayOption 
+                <DayOption
                   key={i}
                   day={e}
                   index={i}
@@ -112,7 +124,7 @@ export default function HabitsPage() {
                 />
               ))}
             </WeekButtons>
-            <CancelOrSave>
+            <CancelOrSave isLoading={isLoading}>
               <button
                 disabled={isLoading}
                 type="button"
@@ -131,18 +143,26 @@ export default function HabitsPage() {
           </AddTaskForm>
         )}
 
-       {habitsAdded.length!==0 &&(
-          <>
-          {habitsAdded.map((e,i) => <Habit key={i} name={e.name} id={e.id} days={e.days} updateListHabit={updateListHabit} setUpdateListHabit ={setUpdateListHabit}/>)}
-       </>
-       
-       )}
-
-        {(habitsAdded.length === 0) && (
+        {habitsAdded.length === 0 && (
           <Message>
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
             começar a trackear!
           </Message>
+        )}
+
+        {habitsAdded.length !== 0 && (
+          <>
+            {habitsAdded.map((e, i) => (
+              <Habit
+                key={i}
+                name={e.name}
+                id={e.id}
+                days={e.days}
+                updateListHabit={updateListHabit}
+                setUpdateListHabit={setUpdateListHabit}
+              />
+            ))}
+          </>
         )}
       </HabitsPageContainer>
       <Footer />
@@ -153,7 +173,7 @@ export default function HabitsPage() {
 const HabitsPageContainer = styled.main`
   margin: 80px 0;
   width: 100vw;
-  height:100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -197,7 +217,7 @@ const Message = styled.p`
 const AddTaskForm = styled.div`
   width: 340px;
   height: 180px;
-  margin-bottom:18px;
+  margin-bottom: 18px;
   background: #ffffff;
   background: #ffffff;
   border-radius: 5px;
@@ -244,6 +264,7 @@ const CancelOrSave = styled.div`
     line-height: 20px;
     border-radius: 4.63636px;
     border: none;
+    opacity: ${(props) => (props.isLoading === true ? "0.7" : 1)};
     display: flex;
     align-items: center;
     justify-content: center;

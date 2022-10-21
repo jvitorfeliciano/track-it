@@ -40,7 +40,7 @@ export default function LoginPage() {
   return (
     <LoginPageContainer>
       <LoginDesign />
-      <LoginForm onSubmit={handleLoginForm}>
+      <LoginForm onSubmit={handleLoginForm} isLoading={loadingLogin}>
         <input
           disabled={loadingLogin}
           onChange={getLoginFormInfo}
@@ -120,6 +120,7 @@ const LoginForm = styled.form`
     background: #52b6ff;
     border-radius: 4.63636px;
     border: none;
+    opacity: ${props=> props.isLoading===true? "0.7":1};
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;

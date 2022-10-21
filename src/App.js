@@ -11,11 +11,11 @@ import TodayPage from "./pages/TodayPage";
 export default function App() {
   const [userInfo, setUserInfo]=useState({}); // estado global
   const [habitsDone, setHabitsDone] = useState([]);
-  const [porcentage, setPorcentage] =useState(0)
+  const [percentage, setPercentage] =useState(0)
   console.log('estou no app')
   return (
     <BrowserRouter>
-      <MyContext.Provider value={{userInfo, setUserInfo, habitsDone, setHabitsDone, porcentage, setPorcentage}} > 
+      <MyContext.Provider value={{userInfo, setUserInfo, habitsDone, setHabitsDone, percentage, setPercentage}} > 
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<LoginPage />} />

@@ -39,7 +39,7 @@ export default function SignUpPage() {
   return (
     <SignUpPageContainer>
       <LoginDesign />
-      <SignUpForm onSubmit={handleSignUpForm}>
+      <SignUpForm onSubmit={handleSignUpForm} isLoadingSignUp={loadingSignUp}>
         <input
           disabled={loadingSignUp}
           onChange={getSignUpInfos}
@@ -139,6 +139,7 @@ const SignUpForm = styled.form`
     background: #52b6ff;
     border-radius: 4.63636px;
     border: none;
+    opacity: ${props=> props.isLoadingSignUp===true? "0.7":1};
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;

@@ -8,11 +8,21 @@ import DailyHabit from "./TodayPageComponents.js/DailyHabit";
 import dayjs from "dayjs";
 
 export default function TodayPage() {
-  const { userInfo, habitsDone, porcentage, setPorcentage } =
+  const { userInfo, percentage, setPercentage } =
     useContext(MyContext);
   const [habitsVector, setHabitsVector] = useState([]);
   const [updateStatus, setUpdateStatus] = useState(false);
 
+  
+  function computePorcentage(array_1) {
+    if (array_1.length === 0) {
+      setPercentage(0);
+      return 0;
+    }
+    let average = Math.ceil((array_1.filter((e)=>e.done===true).length / array_1.length) * 100)
+    setPercentage(average);
+   
+  }
   useEffect(() => {
     const URL =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
@@ -24,7 +34,7 @@ export default function TodayPage() {
     };
     const promise = axios.get(URL, config);
     promise.then((res) => {
-      console.log(res.data);
+      computePorcentage(res.data)
       setHabitsVector(res.data);
     });
 
@@ -53,27 +63,19 @@ export default function TodayPage() {
         break;
     }
   }
-  function computePorcentage(array_1, array_2) {
-    if (array_2.length === 0) {
-      setPorcentage(0);
-      return 0;
-    }
-    let average = ((array_1.length / array_2.length) * 100).toFixed(2);
-    setPorcentage(average);
-    return average + "%" + " hábitos concluidos hoje";
-  }
+  
   return (
     <div>
       <Header />
       <TodayPageContainer>
-        <Date changeColor={habitsDone.length !== 0}>
+        <Date changeColor={percentage !== 0}>
           <h2>
             {translateName()}, {dayjs().format("DD/MM")}
           </h2>
           <p>
-            {habitsDone.length === 0
+            {percentage === 0
               ? "Nenhum hábito concluido ainda"
-              : computePorcentage(habitsDone, habitsVector)}
+              : percentage +"% dos hábitos concluidos hoje"}
           </p>
         </Date>
         {habitsVector.map((e, i) => (
