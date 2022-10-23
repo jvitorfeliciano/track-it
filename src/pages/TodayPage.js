@@ -6,22 +6,22 @@ import axios from "axios";
 import MyContext from "../Mycontext";
 import DailyHabit from "./TodayPageComponents.js/DailyHabit";
 import dayjs from "dayjs";
+import Loading from "../components/Loading";
 
 export default function TodayPage() {
-  const { userInfo, percentage, setPercentage } =
-    useContext(MyContext);
-  const [habitsVector, setHabitsVector] = useState([]);
+  const { userInfo, percentage, setPercentage } = useContext(MyContext);
+  const [habitsVector, setHabitsVector] = useState(null);
   const [updateStatus, setUpdateStatus] = useState(false);
 
-  
-  function computePorcentage(array_1) {
-    if (array_1.length === 0) {
+  function computePorcentage(array) {
+    if (array.length === 0) {
       setPercentage(0);
       return 0;
     }
-    let average = Math.ceil((array_1.filter((e)=>e.done===true).length / array_1.length) * 100)
+    let average = Math.ceil(
+      (array.filter((e) => e.done === true).length / array.length) * 100
+    );
     setPercentage(average);
-   
   }
   useEffect(() => {
     const URL =
@@ -34,21 +34,21 @@ export default function TodayPage() {
     };
     const promise = axios.get(URL, config);
     promise.then((res) => {
-      computePorcentage(res.data)
+      computePorcentage(res.data);
       setHabitsVector(res.data);
     });
 
     promise.catch((err) => {
-      console.log(err.response.data);
+      alert(err.response.data);
     });
   }, [updateStatus]);
 
   function translateName() {
     switch (dayjs().format("dddd")) {
       case "Sunday":
-        return "Segunda";
-      case "Monday":
         return "Domingo";
+      case "Monday":
+        return "Segunda";
       case "Tuesday":
         return "Terça";
       case "Wednesday":
@@ -63,19 +63,29 @@ export default function TodayPage() {
         break;
     }
   }
-  
+  if (habitsVector === null) {
+    return (
+      <>
+        <Header />
+        <TodayPageContainer>
+          <Loading />
+        </TodayPageContainer>
+        <Footer />
+      </>
+    );
+  }
   return (
     <div>
       <Header />
       <TodayPageContainer>
         <Date changeColor={percentage !== 0}>
-          <h2>
+          <h2 data-identifier="today-infos">
             {translateName()}, {dayjs().format("DD/MM")}
           </h2>
-          <p>
+          <p data-identifier="today-infos">
             {percentage === 0
               ? "Nenhum hábito concluido ainda"
-              : percentage +"% dos hábitos concluidos hoje"}
+              : percentage + "% dos hábitos concluidos hoje"}
           </p>
         </Date>
         {habitsVector.map((e, i) => (

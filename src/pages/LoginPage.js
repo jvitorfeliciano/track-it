@@ -13,7 +13,6 @@ export default function LoginPage() {
   const [loadingLogin, setLoadingLogin] = useState(false);
 
   function getLoginFormInfo(e) {
-    console.log(e.target);
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   }
 
@@ -29,7 +28,6 @@ export default function LoginPage() {
       setLoadingLogin(false);
       setUserInfo(resp.data);
       navigate("/hoje");
-      console.log(resp.data);
     });
 
     promise.catch((err) => {
@@ -42,6 +40,7 @@ export default function LoginPage() {
       <LoginDesign />
       <LoginForm onSubmit={handleLoginForm} isLoading={loadingLogin}>
         <input
+          data-identifier="input-email"
           disabled={loadingLogin}
           onChange={getLoginFormInfo}
           name="email"
@@ -50,6 +49,7 @@ export default function LoginPage() {
           placeholder="email"
         />
         <input
+          data-identifier="input-password"
           disabled={loadingLogin}
           onChange={getLoginFormInfo}
           name="password"
@@ -57,11 +57,11 @@ export default function LoginPage() {
           required
           placeholder="senha"
         />
-        <button disabled={loadingLogin} type="submit">
+        <button data-identifier="login-btn" disabled={loadingLogin} type="submit">
           {loadingLogin ? <Loading /> : "Entrar"}
         </button>
       </LoginForm>
-      <Link to="/cadastro">
+      <Link to="/cadastro" data-identifier="sign-up-action">
         <span>Não tem uma conta? Cadastre-se!</span>
       </Link>
     </LoginPageContainer>
@@ -120,7 +120,7 @@ const LoginForm = styled.form`
     background: #52b6ff;
     border-radius: 4.63636px;
     border: none;
-    opacity: ${props=> props.isLoading===true? "0.7":1};
+    opacity: ${(props) => (props.isLoading === true ? "0.7" : "1")};
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;

@@ -28,7 +28,6 @@ export default function SignUpPage() {
     const promise = axios.post(URL, signUpForm);
     promise.then((resp) => {
       navigate("/");
-      console.log(resp.data);
     });
 
     promise.catch((err) => {
@@ -41,6 +40,7 @@ export default function SignUpPage() {
       <LoginDesign />
       <SignUpForm onSubmit={handleSignUpForm} isLoadingSignUp={loadingSignUp}>
         <input
+        data-identifier="input-email"
           disabled={loadingSignUp}
           onChange={getSignUpInfos}
           name="email"
@@ -49,6 +49,7 @@ export default function SignUpPage() {
           required
         />
         <input
+        data-identifier="input-password"
           disabled={loadingSignUp}
           onChange={getSignUpInfos}
           name="password"
@@ -57,6 +58,7 @@ export default function SignUpPage() {
           required
         />
         <input
+        data-identifier="input-name"
           disabled={loadingSignUp}
           onChange={getSignUpInfos}
           name="name"
@@ -65,6 +67,7 @@ export default function SignUpPage() {
           required
         />
         <input
+        data-identifier="input-photo"
           disabled={loadingSignUp}
           onChange={getSignUpInfos}
           name="image"
@@ -80,7 +83,7 @@ export default function SignUpPage() {
           {loadingSignUp ? <Loading /> : "Cadastrar"}
         </button>
       </SignUpForm>
-      <Link to="/">
+      <Link to="/" data-identifier="back-to-login-action">
         <span>Já tem uma conta?Faça Login!</span>
       </Link>
     </SignUpPageContainer>

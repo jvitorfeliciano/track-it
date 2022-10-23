@@ -1,40 +1,37 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import 'react-circular-progressbar/dist/styles.css';
+import "react-circular-progressbar/dist/styles.css";
 import { useContext } from "react";
 import MyContext from "../Mycontext";
 
-
 export default function Footer() {
- const {percentage}=useContext(MyContext);
-console.log(percentage)
+  const { percentage } = useContext(MyContext);
+
   return (
     <FooterContainer>
-      <Link to="/habitos">
+      <Link to="/habitos" data-identifier="habit-page-action">
         <span>Hábitos</span>
       </Link>
       <Link to="/hoje">
-        <div style={{ width: 91, height: 91}}>
-        <CircularProgressbar
-        value={percentage}
-        text={"Hoje"}
-        background
-        backgroundPadding={6}
-        styles={buildStyles({
-          backgroundColor: "#3e98c7",
-          textColor: "#fff",
-          pathColor: "#fff",
-          trailColor: "transparent",
-          marginbottom: "50px",
-          textSize:"19px",
-          pathTransitionDuration: "0.5",
-    
-        })}
-      />
+        <div style={{ width: 91, height: 91 }}>
+          <CircularProgressbar
+            value={percentage}
+            text={"Hoje"}
+            background
+            backgroundPadding={6}
+            styles={buildStyles({
+              backgroundColor: "#3e98c7",
+              textColor: "#fff",
+              pathColor: "#fff",
+              trailColor: "transparent",
+              textSize: "19px",
+              pathTransitionDuration: "0.5",
+            })}
+          />
         </div>
       </Link>
-      <Link to="/historico">
+      <Link to="/historico" data-identifier="historic-page-action">
         <span>Histórico</span>
       </Link>
     </FooterContainer>
@@ -62,8 +59,7 @@ const FooterContainer = styled.footer`
     color: #52b6ff;
     text-decoration: none;
   }
-  div{
+  div {
     margin-bottom: 50px;
-    display: flex;
   }
 `;

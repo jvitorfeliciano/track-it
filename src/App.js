@@ -9,23 +9,22 @@ import SignUpPage from "./pages/SignUpPage";
 import TodayPage from "./pages/TodayPage";
 
 export default function App() {
-  const [userInfo, setUserInfo]=useState({}); // estado global
-  const [habitsDone, setHabitsDone] = useState([]);
-  const [percentage, setPercentage] =useState(0)
-  console.log('estou no app')
+  const [userInfo, setUserInfo] = useState({}); // estado global
+  const [percentage, setPercentage] = useState(0);
   return (
     <BrowserRouter>
-      <MyContext.Provider value={{userInfo, setUserInfo, habitsDone, setHabitsDone, percentage, setPercentage}} > 
+      <MyContext.Provider
+        value={{ userInfo, setUserInfo, percentage, setPercentage }}
+      >
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/cadastro" element={<SignUpPage />} />
-          <Route path="/habitos" element={<HabitsPage/>}/>
-          <Route path="/historico" element={<HistoryPage/>}/>
-          <Route path="/hoje" element={<TodayPage/>}/>
+          <Route path="/habitos" element={<HabitsPage />} />
+          <Route path="/historico" element={<HistoryPage />} />
+          <Route path="/hoje" element={<TodayPage />} />
         </Routes>
       </MyContext.Provider>
     </BrowserRouter>
   );
 }
-

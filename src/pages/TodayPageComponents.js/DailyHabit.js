@@ -24,10 +24,9 @@ export default function DailyHabit({
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const promise = axios.post(URL, "", config);
+      const promise = axios.post(URL, {}, config);
       promise.then((res) => {
         setUpdateStatus(!updateStatus);
-        console.log(res.data);
       });
 
       promise.catch((err) => {
@@ -41,10 +40,9 @@ export default function DailyHabit({
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const promise = axios.post(URL, "", config);
+      const promise = axios.post(URL, {}, config);
       promise.then((res) => {
         setUpdateStatus(!updateStatus);
-        console.log(res.data);
       });
 
       promise.catch((err) => {
@@ -52,26 +50,28 @@ export default function DailyHabit({
       });
     }
   }
-  console.log(currentSequence >= highestSequence)
+
   return (
     <>
-     
-    <HabitDailyCard
-      done={done}
-      changeColor={currentSequence >= highestSequence && currentSequence!==0}
-    >
-      <div>
-        <h2>{name}</h2>
-        <p>
-          Sequência atual: <span>{currentSequence} dias</span><br></br>
-          Seu recorde: <span>{highestSequence} dias</span>
-        </p>
-        
-      </div>
-      <AiFillCheckSquare onClick={() => handleHabitStatus(done, id)} />
-    </HabitDailyCard>
+      <HabitDailyCard
+        data-identifier="today-infos"
+        done={done}
+        changeColor={currentSequence >= highestSequence && done === true}
+      >
+        <div>
+          <h2>{name}</h2>
+          <p>
+            Sequência atual: <span>{currentSequence} dias</span>
+            <br></br>
+            Seu recorde: <span>{highestSequence} dias</span>
+          </p>
+        </div>
+        <AiFillCheckSquare
+          onClick={() => handleHabitStatus(done, id)}
+          data-identifier="done-habit-btn"
+        />
+      </HabitDailyCard>
     </>
-  
   );
 }
 
@@ -120,7 +120,8 @@ const HabitDailyCard = styled.section`
     }
 
     span:last-child {
-      color: ${(props) => (props.changeColor === true ? "#8FC549" : " #666666")};
+      color: ${(props) =>
+        props.changeColor === true ? "#8FC549" : " #666666"};
     }
   }
 `;

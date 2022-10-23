@@ -38,13 +38,16 @@ export default function Habit({
 
   return (
     <HabitContainer>
-      <h2>{name}</h2>
+      <h2 data-identifier="habit-name">{name}</h2>
       {daysHabitVector.map((element, i) => (
-        <DayHabitButton type="button" isSelected={days.includes(i)}>
+        <DayHabitButton key={i} type="button" isSelected={days.includes(i)}>
           {element}
         </DayHabitButton> // posso mapear e retornar um styled components
       ))}
-      <BsTrash onClick={() => deleteHabit(id)} />
+      <BsTrash
+        onClick={() => deleteHabit(id)}
+        data-identifier="delete-habit-btn"
+      />
     </HabitContainer>
   );
 }

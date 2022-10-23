@@ -7,8 +7,8 @@ export default function Header() {
   return (
     <HeaderContainer>
       <span>Trackit</span>
-      <figure>
-        <img src={userInfo.image}/>
+      <figure >
+        <img src={userInfo.image} data-identifier="avatar"/>
       </figure>
     </HeaderContainer>
   );

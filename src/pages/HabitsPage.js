@@ -100,12 +100,13 @@ export default function HabitsPage() {
       <HabitsPageContainer>
         <section>
           <h2>Meus hábitos</h2>
-          <BsFillPlusSquareFill onClick={changeFormHabitStatus} />
+          <BsFillPlusSquareFill onClick={changeFormHabitStatus} data-identifier="create-habit-btn" />
         </section>
 
         {showFormHabit && (
           <AddTaskForm>
             <input
+            data-identifier="input-habit-name"
               disabled={isLoading}
               value={habitInput}
               onChange={(e) => setHabitInput(e.target.value)}
@@ -126,6 +127,7 @@ export default function HabitsPage() {
             </WeekButtons>
             <CancelOrSave isLoading={isLoading}>
               <button
+                 data-identifier="cancel-habit-create-btn"
                 disabled={isLoading}
                 type="button"
                 onClick={handleCancelFormHabit}
@@ -133,6 +135,7 @@ export default function HabitsPage() {
                 Cancelar
               </button>
               <button
+              data-identifier="save-habit-create-btn"
                 disabled={isLoading}
                 type="button"
                 onClick={handleSaveFormHabit}
@@ -144,7 +147,7 @@ export default function HabitsPage() {
         )}
 
         {habitsAdded.length === 0 && (
-          <Message>
+          <Message data-identifier="no-habit-message">
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
             começar a trackear!
           </Message>
@@ -264,7 +267,7 @@ const CancelOrSave = styled.div`
     line-height: 20px;
     border-radius: 4.63636px;
     border: none;
-    opacity: ${(props) => (props.isLoading === true ? "0.7" : 1)};
+    opacity: ${(props) => (props.isLoading === true ? "0.7" : "1")};
     display: flex;
     align-items: center;
     justify-content: center;

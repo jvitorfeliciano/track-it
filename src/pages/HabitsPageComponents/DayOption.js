@@ -21,6 +21,7 @@ export default function DayOption({
 
   return (
     <DayButton
+    data-identifier="week-day-btn"
       teste={isLoading}
       disabled={isLoading}
       isSelected={isSelected}
