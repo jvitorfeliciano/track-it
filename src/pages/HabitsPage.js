@@ -242,7 +242,11 @@ const AddTaskForm = styled.div`
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: #dbdbdb;
+    color:#DBDBDB;
+    &:focus{
+      color:black;
+      outline:none;
+    }
   }
 `;
 const WeekButtons = styled.div`

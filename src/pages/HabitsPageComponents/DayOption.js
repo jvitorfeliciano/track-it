@@ -8,8 +8,6 @@ export default function DayOption({
   isSelected,
   isLoading,
 }) {
-  console.log(daysSelected);
-
   function handleDayButton(day) {
     if (isSelected === false) {
       setDaysSelected([...daysSelected, day]);
@@ -21,7 +19,7 @@ export default function DayOption({
 
   return (
     <DayButton
-    data-identifier="week-day-btn"
+      data-identifier="week-day-btn"
       teste={isLoading}
       disabled={isLoading}
       isSelected={isSelected}

@@ -53,7 +53,8 @@ export default function Habit({
 }
 const HabitContainer = styled.div`
   width: 340px;
-  height: 91px;
+  height: auto;
+  word-break:break-all;
   margin-bottom: 10px;
   background: #ffffff;
   border-radius: 5px;
@@ -62,7 +63,7 @@ const HabitContainer = styled.div`
   padding-bottom: 18px;
   position: relative;
   h2 {
-    margin-top: 13px;
+    margin-top: 20px;
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;

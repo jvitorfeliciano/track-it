@@ -107,9 +107,12 @@ const LoginForm = styled.form`
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: dbdbdb;
+    color: #dbdbdb;
     margin-bottom: 6px;
     padding-left: 11px;
+    &:focus{
+      color:black;
+    }
   }
   button {
     display: flex;

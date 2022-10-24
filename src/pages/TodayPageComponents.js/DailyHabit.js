@@ -59,7 +59,7 @@ export default function DailyHabit({
         changeColor={currentSequence >= highestSequence && done === true}
       >
         <div>
-          <h2>{name}</h2>
+          <div>{name}</div>
           <p>
             Sequência atual: <span>{currentSequence} dias</span>
             <br></br>
@@ -77,15 +77,19 @@ export default function DailyHabit({
 
 const HabitDailyCard = styled.section`
   width: 340px;
-  height: 94px;
+  height:auto;
+  word-break: break-all;
   background: #ffffff;
   border-radius: 5px;
   margin-bottom: 10px;
-  padding: 0 13px;
+  padding: 13px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  h2 {
+  div {
+    width:250px;
+    word-break:break-all;
+    height:auto;
     font-family: "Lexend Deca";
     font-style: normal;
     font-weight: 400;
