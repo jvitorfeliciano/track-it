@@ -12,7 +12,8 @@ export default function Habit({
   id,
 }) {
   const daysHabitVector = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const { userInfo } = useContext(MyContext);
+  const { userInfo,setUpdateStatus,
+    updateStatus } = useContext(MyContext);
 
   function deleteHabit(adress) {
     const deleted = window.confirm("Quer mesmo deletar este hábito?");
@@ -28,6 +29,7 @@ export default function Habit({
       promise.then((resp) => {
         console.log(resp.data);
         setUpdateListHabit(!updateListHabit);
+        setUpdateStatus(!updateStatus)
       });
 
       promise.catch((err) => {

@@ -10,7 +10,8 @@ import axios from "axios";
 import MyContext from "../Mycontext";
 
 export default function HabitsPage() {
-  const { userInfo } = useContext(MyContext);
+  const { userInfo,setUpdateStatus,
+    updateStatus } = useContext(MyContext);
   const daysVector = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [showFormHabit, setShowFormHabit] = useState(false);
   const [habitInput, setHabitInput] = useState("");
@@ -31,6 +32,7 @@ export default function HabitsPage() {
     const promise = axios.get(URL, config);
     promise.then((resp) => {
       setHabitsAdded(resp.data);
+      setUpdateStatus(!updateStatus)
       console.log(resp.data); // quando o usuário não tem  hábitos cadastrados, o servidor retorna uma array vazia;
     });
 
@@ -75,6 +77,7 @@ export default function HabitsPage() {
       setDaysSelected([]);
       setShowFormHabit(false);
       setUpdateListHabit(!updateListHabit);
+      
     });
     promise.catch((err) => {
       setIsLoading(false);

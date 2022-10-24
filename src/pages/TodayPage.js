@@ -9,40 +9,7 @@ import dayjs from "dayjs";
 import Loading from "../components/Loading";
 
 export default function TodayPage() {
-  const { userInfo, percentage, setPercentage } = useContext(MyContext);
-  const [habitsVector, setHabitsVector] = useState(null);
-  const [updateStatus, setUpdateStatus] = useState(false);
-
-  function computePorcentage(array) {
-    if (array.length === 0) {
-      setPercentage(0);
-      return 0;
-    }
-    let average = Math.ceil(
-      (array.filter((e) => e.done === true).length / array.length) * 100
-    );
-    setPercentage(average);
-  }
-  useEffect(() => {
-    const URL =
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const promise = axios.get(URL, config);
-    promise.then((res) => {
-      computePorcentage(res.data);
-      setHabitsVector(res.data);
-    });
-
-    promise.catch((err) => {
-      alert(err.response.data);
-    });
-  }, [updateStatus]);
-
+ const {habitsVector, updateStatus, setUpdateStatus, percentage} = useContext(MyContext)
   function translateName() {
     switch (dayjs().format("dddd")) {
       case "Sunday":

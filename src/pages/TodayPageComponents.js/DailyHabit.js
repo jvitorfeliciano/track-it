@@ -11,7 +11,7 @@ export default function DailyHabit({
   currentSequence,
   highestSequence,
   setUpdateStatus,
-  updateStatus,
+  updateStatus
 }) {
   const { userInfo } = useContext(MyContext);
 

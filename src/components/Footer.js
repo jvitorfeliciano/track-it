@@ -2,11 +2,44 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import MyContext from "../Mycontext";
+import axios from "axios";
+
 
 export default function Footer() {
-  const { percentage } = useContext(MyContext);
+  const { userInfo, percentage, setPercentage,setHabitsVector,updateStatus } = useContext(MyContext);
+
+  function computePorcentage(array) {
+    if (array.length === 0) {
+      setPercentage(0);
+      return 0;
+    }
+    let average = Math.ceil(
+      (array.filter((e) => e.done === true).length / array.length) * 100
+    );
+    setPercentage(average);
+  }
+  useEffect(() => {
+    const URL =
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const promise = axios.get(URL, config);
+    promise.then((res) => {
+      computePorcentage(res.data);
+      setHabitsVector(res.data);
+    });
+
+    promise.catch((err) => {
+      alert(err.response.data);
+    });
+  }, [updateStatus]);
+
 
   return (
     <FooterContainer>

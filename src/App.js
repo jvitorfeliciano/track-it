@@ -11,10 +11,13 @@ import TodayPage from "./pages/TodayPage";
 export default function App() {
   const [userInfo, setUserInfo] = useState({}); // estado global
   const [percentage, setPercentage] = useState(0);
+  const [habitsVector, setHabitsVector] = useState(null);
+  const [updateStatus, setUpdateStatus] = useState(false);
+  
   return (
     <BrowserRouter>
       <MyContext.Provider
-        value={{ userInfo, setUserInfo, percentage, setPercentage }}
+        value={{ userInfo, setUserInfo, percentage, setPercentage,habitsVector, setHabitsVector,updateStatus, setUpdateStatus }}
       >
         <GlobalStyle />
         <Routes>
