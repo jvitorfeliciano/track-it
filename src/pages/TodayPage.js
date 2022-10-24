@@ -74,7 +74,7 @@ export default function TodayPage() {
 }
 
 const TodayPageContainer = styled.main`
-  margin: 80px 0;
+  margin: 80px 0 150px 0;
   width: 100vw;
   height: 100%;
   display: flex;

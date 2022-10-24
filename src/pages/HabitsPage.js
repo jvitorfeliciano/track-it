@@ -32,7 +32,6 @@ export default function HabitsPage() {
     const promise = axios.get(URL, config);
     promise.then((resp) => {
       setHabitsAdded(resp.data);
-      setUpdateStatus(!updateStatus)
       console.log(resp.data); // quando o usuário não tem  hábitos cadastrados, o servidor retorna uma array vazia;
     });
 
@@ -77,6 +76,7 @@ export default function HabitsPage() {
       setDaysSelected([]);
       setShowFormHabit(false);
       setUpdateListHabit(!updateListHabit);
+      setUpdateStatus(!updateStatus)
       
     });
     promise.catch((err) => {
@@ -177,7 +177,7 @@ export default function HabitsPage() {
 }
 
 const HabitsPageContainer = styled.main`
-  margin: 80px 0;
+  margin: 80px 0 150px 0;
   width: 100vw;
   height: 100%;
   display: flex;
@@ -209,6 +209,7 @@ const HabitsPageContainer = styled.main`
       color: #126ba5;
     }
   }
+ 
 `;
 const Message = styled.p`
   width: 340px;
