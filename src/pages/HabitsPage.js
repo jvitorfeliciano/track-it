@@ -242,9 +242,11 @@ const AddTaskForm = styled.div`
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color:#DBDBDB;
+    color:black;
+    &::placeholder{
+      color:#DBDBDB;
+    }
     &:focus{
-      color:black;
       outline:none;
     }
   }

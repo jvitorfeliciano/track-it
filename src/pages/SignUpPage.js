@@ -129,9 +129,15 @@ const SignUpForm = styled.form`
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: #dbdbdb;
+    color: black;
     margin-bottom: 6px;
     padding-left: 11px;
+    &::placeholder{
+      color:#DBDBDB;
+    }
+    &:focus{
+      outline:none;
+    }
   }
   button {
     display: flex;
