@@ -78,7 +78,7 @@ export default function TodayPage() {
     <div>
       <Header />
       <TodayPageContainer>
-        <Date changeColor={percentage !== 0}>
+        <DateToday changeColor={percentage !== 0}>
           <h2 data-identifier="today-infos">
             {translateName()}, {dayjs().format("DD/MM")}
           </h2>
@@ -87,7 +87,7 @@ export default function TodayPage() {
               ? "Nenhum hábito concluido ainda"
               : percentage + "% dos hábitos concluidos hoje"}
           </p>
-        </Date>
+        </DateToday>
         {habitsVector.map((e, i) => (
           <DailyHabit
             key={i}
@@ -115,7 +115,7 @@ const TodayPageContainer = styled.main`
   align-items: center;
   background: #e5e5e5;
 `;
-const Date = styled.section`
+const DateToday = styled.section`
   width: 340px;
   margin-top: 28px;
   h2 {
